@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <!--Bootstrap CDN(content delivery network) for template of our site-->
+        <script src= "https://code.jquery.com/jquery-3.5.1.js"> </script>
+	    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    </head>
+
+    <body>
+        <style>
+            body {
+              background-image: url('https://images.pexels.com/photos/3255761/pexels-photo-3255761.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+            }
+        </style>
+        <style type = "text/css">
+            /*centerdiv class to place text at center*/
+            .centerdiv
+            {
+                width: 45%;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 50px;
+                text-align: center;
+                font-family:cursive;
+            }
+            /*element to place login class */
+            .login
+            {   
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                width: 45%;
+            }
+            /*element to place blog class */
+            .blog
+            {
+                margin-top: 20px;
+                width: 45%;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                font-family: monospace;
+            }
+        </style>
+        <!--Bootstrap's Navigation bar-->
+        <nav class = "navbar navbar-default " role ="navigation">
+            <ul class = "nav navbar-nav">
+                {% if user != None %}
+				<a class="navbar-brand" href="#">{{ user.username }}</a>     
+                <li><a href="#" data-toggle="modal" data-target="#addblog"> Add Blog </a></li>      <!--data-toggle tells what to do i.e. opens modal and data-target tells what element to run i.e. addblog-->
+				{% endif %}
+				<li><a href="#" data-toggle="modal" data-target="#login"> Login </a></li>
+            </ul>
+        </nav>
+
+        <div class = "page-header centerdiv">       <!--new class 'page-header centerdiv' using centerdiv class to display header at a particular position-->
+           <h1> Blog Express </h1>   
+        </div>
+        
+        <div class = "well blog">       <!--new class 'well blog' using blog class to display blog details at a particular position-->
+            {% for blog in blogs %}     <!--this will iterate through every blog and display its content-->
+               <div>
+                   <div class = "page-header">
+                       <h3>{{ blog.title }}</h3>
+                       <h7>{{ blog.author }}</h7>
+                   </div>
+                   <h5>{{ blog.blog_content }}</h5>
+               </div> 
+            {% endfor %}
+        </div>   
+     
+        <div class = "modal fade" id = "login">     <!--bootstrap's modal popup to login -->
+            <div class = "modal-dialog">
+                <div class = "modal-content">
+                    <form method = "post">      <!--Opens the form and method is POST as we don't want to print User's usename and password in url-->
+                        {% csrf_token %}        <!--Django's security token Cross-site Request Forgery -->
+                        <div class = "modal-body login">
+                            <b> Username </b>
+                                <input class = "form-control" name = "username">        <!--Bootstrap's form-control class-->
+                            <b> Password </b>
+                                <input type = "password" class = "form-control" name = "password">
+                        </div>
+                    
+                        <div class = "modal-footer">
+                            <input type = "submit" class = "btn btn-success pull-left" value = "Login">     <!--bootstrap's class to place success login button at left of modal-->
+                            <button type = "button" class = "btn btn-dafault" data-dismiss = "modal"> Close </button>       <!--bootstrap's data-dismiss close the modal-->
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>  
+
+        <div class = "modal fade" id = "addblog">       <!--bootstrap's modal popup to add blog -->  
+            <div class = "modal-dialog">
+                <div class = "modal-content">
+                    <form action = "/addblog/" method = "post">     <!--form url takes to /addblog/-->
+                        {% csrf_token %}
+                        <div class = "modal-body blog">     <!--bootstrap's modal-body with blog class-->
+                            <b> Title </b>
+                                <input class = "form-control" name = "title">
+                            <b> Blog Content </b>
+                                <input class = "form-control" name = "blog_content">
+                        </div>
+                    
+                        <div class = "modal-footer">
+                            <input type = "submit" class = "btn btn-success pull-left" value = "Add Blog">     
+                            <button type = "button" class = "btn btn-dafault" data-dismiss = "modal"> Close </button>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    
+        <footer>&copy; Copyright 2020 Shubham Sood</footer>     <!--Just a cpoyright tag-->
+    </body>
+</html>
