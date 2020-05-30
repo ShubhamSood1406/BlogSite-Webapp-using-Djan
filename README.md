@@ -1,7 +1,7 @@
 # BlogSite-Webapp-using-Django
 
 BlogExpress is an web-application based on Django framework where a user can upload their blogs.
-In template I use HTML with Bootstrap CDN to designing the web page and use Bootstrap's nav-bar for navigation bar and Bootstrap's modal for login and add blog pop up so that user can login and add content of blog.
+I used HTML with Bootstrap CDN core CSS to designing the web page and use Bootstrap's nav-bar for navigation bar and Bootstrap's modal for login and add blog pop up so that user can login and add content of blog.
 
 ### Login 
 User click on Login button to Login with their Username and Password and Django will authenticate the user.
